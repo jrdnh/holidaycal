@@ -24,7 +24,8 @@ class AbstractCalendar:
         if name is None:
             name = type(self).__name__
         self.name = name
-        self.rules = rules
+        if rules is not None:
+            self.rules = rules
 
     def holidays(self, start_date, end_date, names=False, observed=False):
         """Returns the holidays between start_date and end_date.
@@ -40,7 +41,7 @@ class AbstractCalendar:
         Returns:
             list: List of dates or (date, holiday name)
         """
-        if self.rules is None:
+        if len(self.rules) == 0:
             raise ValueError('Calendar must have holiday rules.')
 
         holidays = [(r.name, h) for r in self.rules for h in r.dates(start_date, end_date, observed)]
@@ -51,21 +52,29 @@ class AbstractCalendar:
 
         return holidays
 
+    def holiday_names(self):
+        """Returns the names of the holiday rules in the calendar."""
+        return [h.name for h in self.rules]
+
+    def __repr__(self):
+        num_rules = len(self.rules) if self.rules else 0
+        return f'Calendar: {self.name} ({num_rules} holiday rules)'
+
 
 class NYBankHolidayCalendar(AbstractCalendar):
 
     rules = [
         NYBankHolidays.NewYearsDay,
         NYBankHolidays.MLKDay,
-        NYBankHolidays.LincolnsBirthday,
+        # NYBankHolidays.LincolnsBirthday,
         NYBankHolidays.WashingtonsBirthday,
         NYBankHolidays.MemorialDay,
-        NYBankHolidays. FlagDay,
+        # NYBankHolidays. FlagDay,
         NYBankHolidays.Juneteenth,
         NYBankHolidays.IndependenceDay,
         NYBankHolidays.LaborDay,
         NYBankHolidays.ColumbusDay,
-        NYBankHolidays.GeneralElection,
+        # NYBankHolidays.GeneralElection,
         NYBankHolidays.VeteransDay,
         NYBankHolidays.Thanksgiving,
         NYBankHolidays.ChristmasDay

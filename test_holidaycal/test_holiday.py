@@ -7,6 +7,11 @@ from holidaycal.holiday import AbstractHoliday, ListHoliday, RecurringHoliday
 from holidaycal.observance import nearest_weekday
 
 
+def test_abstract_holiday_dates():
+    with pytest.raises(NotImplementedError):
+        AbstractHoliday('holiday').dates(date(2021, 1, 1), date(2022, 1, 1), False)
+
+
 def test_recurring_construction():
     with pytest.raises(ValueError):
         RecurringHoliday('Incomplete Holiday')
@@ -67,3 +72,12 @@ def test_recurring_dates_easter():
                                                                   date(2018, 4, 2), date(2019, 4, 22)]
     assert holiday.__repr__() == 'RecurringHoliday: test easter (offset=EasterDelta(days=+1))'
 
+
+def test_list_holiday():
+    holiday = ListHoliday('List holiday',
+                          [date(2021, 1, 1), date(2021, 1, 2), date(2021, 1, 3)],
+                          observance=nearest_weekday)
+    assert holiday.dates(date(2021, 1, 1), date(2022, 1, 1)) == [date(2021, 1, 1), date(2021, 1, 2), date(2021, 1, 3)]
+    assert holiday.dates(date(2021, 1, 1), date(2022, 1, 1), observed=True) == \
+        [date(2021, 1, 1), date(2021, 1, 1), date(2021, 1, 4)]
+    assert holiday.__repr__() == 'ListHoliday: List holiday (number of dates=3, observance=nearest_weekday)'

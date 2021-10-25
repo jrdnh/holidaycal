@@ -145,7 +145,7 @@ class ListHoliday(AbstractHoliday):
         if self._observance is not None:
             info.append(f'observance={self._observance.__name__}')
 
-        return f'ListHoliday: {self.name} ({", ".join(info)}'
+        return f'ListHoliday: {self.name} ({", ".join(info)})'
 
 
 # New York banking holidays
@@ -153,18 +153,18 @@ class ListHoliday(AbstractHoliday):
 class NYBankHolidays:
     NewYearsDay = RecurringHoliday('New Year\'s Day', month=1, day=1, observance=sunday_to_monday)
     MLKDay = RecurringHoliday('Dr. Martin Luther King, Jr. Day', offset=relativedelta(month=1, weekday=MO(3)))
-    LincolnsBirthday = RecurringHoliday('Lincoln\'s Birthday', month=2, day=12, observance=sunday_to_monday)
+    # LincolnsBirthday = RecurringHoliday('Lincoln\'s Birthday', month=2, day=12, observance=sunday_to_monday)
     WashingtonsBirthday = RecurringHoliday('Washington\'s Birthday', offset=relativedelta(month=2, weekday=MO(3)))
     MemorialDay = RecurringHoliday('Memorial Day', offset=relativedelta(month=5, weekday=MO(-1)))
-    FlagDay = RecurringHoliday('Flag Day', offset=relativedelta(month=6, weekday=SU(2)))
+    # FlagDay = RecurringHoliday('Flag Day', offset=relativedelta(month=6, weekday=SU(2)))
     Juneteenth = RecurringHoliday('Juneteenth', month=6, day=19, observance=sunday_to_monday,
                                   start_date=date(2021, 6, 19))
     IndependenceDay = RecurringHoliday('Independence Day', month=7, day=4, observance=sunday_to_monday)
     LaborDay = RecurringHoliday('Labor Day', offset=relativedelta(month=9, weekday=MO(1)))
     ColumbusDay = RecurringHoliday('Columbus Day', offset=relativedelta(month=10, weekday=MO(2)))
     # https://www.nysenate.gov/legislation/laws/ELN/8-100
-    GeneralElection = RecurringHoliday('General Election Day', offset=[relativedelta(month=11, weekday=MO(1)),
-                                                                       relativedelta(days=1)])
+    # GeneralElection = RecurringHoliday('General Election Day', offset=[relativedelta(month=11, weekday=MO(1)),
+    #                                                                    relativedelta(days=1)])
     VeteransDay = RecurringHoliday('Veterans Day', month=11, day=11, observance=sunday_to_monday)
     Thanksgiving = RecurringHoliday('Thanksgiving Day', offset=relativedelta(month=11, weekday=TH(4)))
     ChristmasDay = RecurringHoliday('Christmas Day', month=12, day=25, observance=sunday_to_monday)
@@ -181,19 +181,13 @@ class LondonBankHolidays:
     Additionally, ad hoc holidays may be added by royal proclamation.
     """
 
-    @staticmethod
-    def skip_ve_anniversaries(dt):
-        if dt in [date(1995, 5, 1), date(2020, 5, 4)]:
-            return True
-        return False
-
     NewYearsDay = RecurringHoliday('New Year\'s Day', month=1, day=1, observance=weekend_to_monday)
     GoodFriday = RecurringHoliday('Good Friday', offset=EasterDelta(days=-2))
     EasterMonday = RecurringHoliday('Easter Monday', offset=EasterDelta(days=1))
     EarlyMay = RecurringHoliday('Early May Holiday', offset=relativedelta(month=5, weekday=MO(2)),
-                                start_date=date(1978, 1, 1),  skip=skip_ve_anniversaries)
+                                start_date=date(1978, 1, 1))
     EarlyMayVEAnniversary = ListHoliday('Early May Holiday / VE Day Anniversary',
-                                          [date(1995, 5, 8), date(2020, 5, 8)])
+                                        [date(1995, 5, 8), date(2020, 5, 8)])
     SpringHoliday = RecurringHoliday('Spring Holiday', offset=relativedelta(month=5, weekday=MO(-1)))
     SummerHoliday = RecurringHoliday('Summer Holiday', offset=relativedelta(month=8, weekday=MO(-1)))
     Christmas = RecurringHoliday('Christmas', month=12, day=25, observance=sunday_to_tuesday)
