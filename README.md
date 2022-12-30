@@ -1,6 +1,6 @@
 # holidaycal
 
-*Holiday calendars for financial analysis.*
+Generate recurring calendar dates and observance adjustments. Small, fast, pure Python package.
 
 ## Overview
 `holidaycal` is a pure Python package for generating holidays and their observed dates. It is heavily inspired by the `pandas` holiday calendars, but it is faster and comes in a slim, single-purpose package. Additional features include an Easter offset, the ability to skip regularly scheduled holiday dates, and the concept of actual and observed dates. It has full test coverage. 
@@ -11,8 +11,9 @@ This package includes convenience calendars for New York and London banking holi
 
 ## Installation
 
+Requires Python 3.6+.
 
-`pip install holidaycal`
+`pip install git+https://github.com/jrdnh/holidaycal.git`
 
 ### Holidays
 
